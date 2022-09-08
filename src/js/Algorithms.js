@@ -1,3 +1,9 @@
+function swap(items, leftIndex, rightIndex) {
+  var temp = items[leftIndex];
+  items[leftIndex] = items[rightIndex];
+  items[rightIndex] = temp;
+}
+
 //
 //Merge Sort
 //
@@ -134,12 +140,6 @@ function partition(items, left, right, animations) {
   return i;
 }
 
-function swap(items, leftIndex, rightIndex) {
-  var temp = items[leftIndex];
-  items[leftIndex] = items[rightIndex];
-  items[rightIndex] = temp;
-}
-
 //
 // Bubble Sort
 //
@@ -176,4 +176,50 @@ export function bubbleSort(array) {
   }
 
   return animations;
+}
+
+//
+// Heap Sort
+//
+export function heapSort(array) {
+  console.log(array);
+  const animations = [];
+  let length = array.length;
+  for (let i = Math.floor(length / 2) - 1; i >= 0; i--) {
+    max_heapify(array, i, length, animations); //Build max heap
+  }
+  for (let i = length - 1; i >= 0; i--) {
+    swap(array, 0, i); //Remove root element
+    max_heapify(array, 0, i, animations); //Build max heap again
+  }
+  return animations;
+}
+
+//Creates max-heap from unsorted array (Max Heap parentNodes > childNodes)
+function max_heapify(array, index, length, animations) {
+  let startIndex = 2 * index; //startIndex child index
+  let endIndex = 2 * index + 1; //endIndex child index
+  let max;
+
+  if (endIndex < length) {
+    //endIndex child exists?
+    if (array[startIndex] >= array[endIndex]) {
+      //compare children to find max
+      max = startIndex;
+    } else {
+      max = endIndex;
+    }
+  } else if (startIndex < length) {
+    //startIndex child exists?
+    max = startIndex;
+  } else {
+    return; //no children -> return
+  }
+  animations.push([array[max], ""]);
+  if (array[index] < array[max]) {
+    //check if the largest child is greater than the parent
+    animations.push([index, max]);
+    swap(array, index, max); //it is? Swap both!
+    max_heapify(array, max, length, animations); //Repeat
+  }
 }

@@ -1,6 +1,11 @@
 import { useState, useEffect } from "react";
 import "../css/Home.css";
-import { mergeSort, quickSortAnimations, bubbleSort } from "../js/Algorithms";
+import {
+  mergeSort,
+  quickSortAnimations,
+  bubbleSort,
+  heapSort,
+} from "../js/Algorithms";
 
 //Colors
 const PRIMARY_COLOR = "#e76f51"; //Orange
@@ -22,7 +27,7 @@ export default function Home() {
   }, []);
 
   return (
-    <>
+    <div className="main-container">
       <header>
         <nav>
           <ul className="nav_links">
@@ -50,7 +55,9 @@ export default function Home() {
               </button>
             </li>
             <li>
-              <button>Heap Sort</button>
+              <button onClick={() => getHeapSortAnimations(array)}>
+                Heap Sort
+              </button>
             </li>
             <li>
               <button>Bucket Sort</button>
@@ -74,10 +81,11 @@ export default function Home() {
           })}
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
+//Merge Sort animations and algorithm call
 function getMergeSortAnimations(array) {
   const animations = mergeSort(array);
   for (let i = 0; i < animations.length; i++) {
@@ -102,6 +110,7 @@ function getMergeSortAnimations(array) {
   }
 }
 
+//Quick sort animations and algorithm call
 function getQuickSortAnimations(array) {
   const animations = quickSortAnimations(array);
   let currentPivot = null;
@@ -154,6 +163,7 @@ function getQuickSortAnimations(array) {
   }
 }
 
+//Bubble sort animations and algorithm call
 function getBubbleSortAnimations(array) {
   const animations = bubbleSort(array);
 
@@ -220,6 +230,12 @@ function getBubbleSortAnimations(array) {
         continue;
     }
   }
+}
+
+//Heap sort animations and algorithm call
+function getHeapSortAnimations(array) {
+  const animations = heapSort(array);
+  console.log(animations);
 }
 
 function newArray({ setArray, arrayLenth }) {
